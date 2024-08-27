@@ -3,7 +3,8 @@
 import { DotLottieCommonPlayer, DotLottiePlayer } from "@dotlottie/react-player";
 import Image from "next/image";
 import productImage from '@/assets/product-image.png';
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import { animate, motion, useMotionTemplate, useMotionValue, ValueAnimationTransition } from "framer-motion";
 
 const tabs = [
   {
@@ -34,13 +35,34 @@ const tabs = [
 
 const FeatureTab = (tab: typeof tabs[number]) => {
   const dotlottieRef = useRef<DotLottieCommonPlayer>(null);
+
+  const xPrecentage = useMotionValue(0);
+  const yPrecenntage = useMotionValue(0);
+
+  const maskImage = useMotionTemplate `radial-gradient(80px 80px at ${xPrecentage}% ${yPrecenntage}%,black,transparent`;
+  useEffect( () => {
+    const options: ValueAnimationTransition = {
+      duration:4,
+      repeat: Infinity,
+      ease: 'linear',
+      repeatType: 'loop',
+    }
+    animate(xPrecentage, [0, 100, 100, 0, 0], options);
+    animate(yPrecenntage, [0, 0, 100, 100, 0], options);
+  }, []);
+
   const handleTabHover = () => {
     if (dotlottieRef.current === null) return;
     dotlottieRef.current.seek(0);
     dotlottieRef.current.play();
   };
   return (
-    <div onMouseEnter={handleTabHover} className="border border-white/15 flex p-2.5 rounded-xl gap-2.5 items-center lg:flex-1">
+    <div onMouseEnter={handleTabHover} className="border border-white/15 flex p-2.5 rounded-xl gap-2.5 items-center lg:flex-1 relative">
+      <motion.div
+      style={{
+        maskImage,
+      }}
+      className="absolute inset-0 -m-px border border-[#A369FF] rounded-xl"></motion.div>
       <div className="h-12 w-12 border border-white/15 rounded-lg inline-flex items-center justify-center">
         <DotLottiePlayer ref={dotlottieRef} src={tab.icon} className="h-5 w-5" autoplay />
       </div>
