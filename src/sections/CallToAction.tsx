@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/button";
 import starsBg from '@/assets/stars.png';
-import gridLines from '@/assets/grid-lines.png'
+import gridLines from "@/assets/grid-lines.png"
 import { motion, useMotionTemplate, useMotionValue, useScroll, useTransform } from 'framer-motion';
 import { RefObject, useEffect, useRef } from "react";
 
@@ -18,11 +18,11 @@ const useRelativeMousePosition = (to: RefObject<HTMLElement>) => {
 
   useEffect(() => {
     window.addEventListener('mousemove', updateMousePosition);
-
+  
     return () => {
       window.removeEventListener('mousemove', updateMousePosition);
     }
-  }, []);
+  }, []); 
 
   return [mouseX, mouseY];
 };
@@ -35,7 +35,8 @@ export const CallToAction = () => {
     offset: ["start end", "end start"],
   });
 
-  const backgroundPositionY = useTransform(scrollYProgress, 
+  const backgroundPositionY = useTransform(
+    scrollYProgress, 
     [0, 1], 
     [-300, 300]
   );
@@ -64,13 +65,13 @@ export const CallToAction = () => {
 
           <div className="absolute inset-0 bg-[rgb(74,32,138)] bg-blend-overlay [mask-image:radial-gradient(50%_50%_at_50%_35%,black,transparent)] group-hover:opacity-0 transition duration-700" 
           style={{
-            backgroundImage:  `url(${gridLines.src}`,
+            backgroundImage:  `url(${gridLines.src})`,
           }}>
           </div> 
           <motion.div className="absolute inset-0 bg-[rgb(74,32,138)] bg-blend-overlay opacity-0 group-hover:opacity-100 transition duration-700" 
           style={{
             maskImage,
-            backgroundImage: `url(${gridLines.src}` 
+            backgroundImage: `url(${gridLines.src}`,
           }}>
           </motion.div>
 
